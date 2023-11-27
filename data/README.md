@@ -9,7 +9,8 @@ _For now it's just preliminary data_
      - The current data in the github is from Oct 27 - Nov 27  
       
 - Mediastack
-  - Can change start date but end date is 1 month after (can play around with maybe getting month before vs after release of movie)   
+  - Can change start date but end date is 1 month after
+    - Tried to play around with getting month before vs after release of movie = no articles 
   - Only fetches 100 articles
   - The current data in the github is from July 21 - Aug 21  
 
