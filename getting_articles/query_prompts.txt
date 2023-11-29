@@ -1,0 +1,2 @@
+'"Barbie movie" OR "Barbie film" AND (release OR cast OR director OR premiere)'
+'"Barbie movie" OR "Barbie film" AND ("Margot Robbie" OR "Ryan Gosling" OR "Will Ferrell" OR "Emma Mackey" OR "Greta Gerwig")'

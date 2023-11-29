@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 from datetime import datetime, timedelta
+import argparse
 
 def fetch_articles(api_key, query, from_date, to_date, sort_by='publishedAt'):
     base_url = 'https://newsapi.org/v2/everything'
@@ -32,26 +33,45 @@ def fetch_articles(api_key, query, from_date, to_date, sort_by='publishedAt'):
 
     return articles
 
-def main():
-    api_key = input("Enter your NewsAPI key: ")
-    query = '(Barbie AND movie)'  
+def query_newsapi(api_key, query, outfile, from_date=None, to_date=None):
+        
+#     api_key = input("Enter your NewsAPI key: ")
+#     query = '(Barbie AND movie)'
     
-    # Set the date range to the last 30 days
-    to_date = datetime.today().strftime('%Y-%m-%d')
-    from_date = (datetime.today() - timedelta(days=30)).strftime('%Y-%m-%d')
+    # Set the date range to the last 30 days if not inputed
+    if not to_date:
+        to_date = datetime.today().strftime('%Y-%m-%d')
+        
+    if not from_date:
+        to_date_obj = datetime.strptime(to_date, '%Y-%m-%d')
+        from_date = (to_date_obj - timedelta(days=30)).strftime('%Y-%m-%d')
 
     articles = fetch_articles(api_key, query, from_date, to_date)
 
     if articles:
         # Convert to DataFrame for easier manipulation
         df = pd.DataFrame(articles)
-        print(df.head())
+#         print(df.head())
 
         # Save to CSV
-        df.to_csv('barbie_movie_articles.csv', index=False)
-        print("Articles saved to barbie_movie_articles.csv")
+        df.to_csv(outfile, index=False)
+        print(f"Articles saved to {outfile}, query = {query}")
+        return True
     else:
         print("No articles found.")
+        return False
+
+def main():
+    parser = argparse.ArgumentParser(description='Process a query with optional start and end dates.')
+
+    parser.add_argument('api_key', type=str, help='The API key')
+    parser.add_argument('query', type=str, help='The query string')
+    parser.add_argument('-o', '--output', type=str, help='Output file path', required=True)
+    parser.add_argument('--start_date', type=str, help='The start date in YYYY-MM-DD format', required=False)
+    parser.add_argument('--end_date', type=str, help='The end date in YYYY-MM-DD format', required=False)
+    
+    args = parser.parse_args()
+    query_newsapi(args.api_key, args.query, args.output, args.start_date, args.end_date)
 
 if __name__ == "__main__":
     main()
