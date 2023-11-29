@@ -30,6 +30,8 @@ def main():
     dataframes = [pd.read_csv(file) for file in combine_files]
 
     combined_df = pd.concat(dataframes, ignore_index=True)
+    combined_df = combined_df.drop_duplicates(subset ='url')
+
     combined_df.to_csv(args.output, index=False)
     for file in combine_files:
         os.remove(file)
