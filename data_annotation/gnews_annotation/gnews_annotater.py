@@ -30,10 +30,23 @@ def categorize_article(article, category_keywords):
             return category
     return "Uncategorized"
 
-# Annotate articles
-for article in articles:
-    article['category'] = categorize_article(article, category_keywords)
+# Separate categorized and uncategorized articles
+categorized_articles = []
+uncategorized_articles = []
 
-# Output annotated data
-with open('gnews_annotated_articles.json', 'w') as file:
-    json.dump(articles, file)
+for article in articles:
+    category = categorize_article(article, category_keywords)
+    article['category'] = category
+
+    if category == "Uncategorized":
+        uncategorized_articles.append(article)
+    else:
+        categorized_articles.append(article)
+
+# Save categorized articles
+with open('Barbie_categorized_articles.json', 'w') as file:
+    json.dump(categorized_articles, file)
+
+# Save uncategorized articles
+with open('Barbie_uncategorized_articles.json', 'w') as file:
+    json.dump(uncategorized_articles, file)
