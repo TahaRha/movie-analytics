@@ -6,7 +6,9 @@ _For now it's just preliminary data_
 - GNews
      - **Most Promising**
      - The current data:
-       - Keywords: 'Barbie Movie', 'Margot Robbie', 'Barbie', 'Barbenheimer', 'Greta Gerwig'
+       - Barbie Movie Keywords: 'Barbie Movie', 'Margot Robbie', 'Barbie', 'Barbenheimer', 'Greta Gerwig'
+       - Oppenheimer Keywords: 'Christopher Nolan', 'Cillian Murphy', 'Oppenheimer Movie', 'Barbenheimer', 'Oppenheimer'
+       - Mission Impossible Keywords: 'Mission: Impossible 7', 'Mission: Impossible – Dead Reckoning Part One', 'Dead Reckoning', 'Tom Cruise', 'Christopher McQuarrie'
        - Dates: 06/21/2023 - 08/21/2023 (got ~200 articles for each keyword, one month before release & one month after release)
        - Clean Up: Combined json files into one and removed duplicates
 
