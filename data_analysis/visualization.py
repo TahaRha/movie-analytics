@@ -1,27 +1,24 @@
 import seaborn as sns
-import pandas as pd
 import matplotlib.pyplot as plt
 import json
 
-with open('data_parsed/categories_sentiments.json', 'r') as f:
-    sentiment_data = json.load(f)
+with open('data_parsed/tfidf_movies_separate.json', 'r') as f:
+    data = json.load(f)
 
-formatted_data = []
-for category, values in sentiment_data.items():
-    for movie, sentiment in values.items():
-        formatted_data.append({'Category': category, 'Movie': movie, 'Sentiment': sentiment})
+# Create subplots to display graphs side by side
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-# Create a DataFrame from the formatted data
-df = pd.DataFrame(formatted_data)
+# Loop through each movie and its TF-IDF scores to create a graph
+for i, (movie, tfidf_scores) in enumerate(data.items()):
+    # Sort TF-IDF scores in descending order
+    sorted_tfidf = sorted(tfidf_scores.items(), key=lambda x: x[1], reverse=True)[:20]  # Select top 10 words
+    
+    # Create a bar plot using Seaborn
+    sns.barplot(x=[score[1] for score in sorted_tfidf], y=[score[0] for score in sorted_tfidf], palette='viridis', ax=axes[i])
+    axes[i].set_title(movie)
+    axes[i].set_xlabel("TF-IDF Score")
+    axes[i].set_ylabel("Words")
 
-# Create a grouped bar plot using Seaborn
-plt.figure(figsize=(12, 8))
-sns.barplot(x='Category', y='Sentiment', hue='Movie', data=df, palette='muted', dodge=True)
-plt.title('Sentiment Comparison across Categories for Movies')
-plt.xlabel('Categories')
-plt.ylabel('Sentiment')
-plt.xticks(rotation=45, ha='right')  # Adjust rotation and alignment of x-axis labels
-plt.legend(title='Movie', bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
-plt.savefig('data_visualization/sentiment_categories.png')
+plt.savefig('data_visualization/tfidf_movies_separate.png')
 plt.show()
